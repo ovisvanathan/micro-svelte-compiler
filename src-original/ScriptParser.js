@@ -1,10 +1,4 @@
-
-const { acorn } = require('acorn')
-
-var utils = require('./utils');
-
 import { parse } from 'acorn'
-
 
 const ScriptParser = {
   parse (source) {
@@ -20,8 +14,6 @@ const ScriptParser = {
     ast.body.forEach(declaration => {
       if (declaration.type === 'ExportNamedDeclaration') {
         this.addExport(props, declaration.declaration)
-	  } else  if (declaration.type === 'VariableDeclaration') {
-        this.addExport(props, declaration)
       } else {
         rest.push(declaration)
       }
@@ -30,7 +22,7 @@ const ScriptParser = {
     return { props, rest }
   },
 
- addExport (props, variableDeclaration) {
+  addExport (props, variableDeclaration) {
     variableDeclaration.declarations.forEach(decl => {
       props.push(decl.id.name)
     })
